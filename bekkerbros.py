@@ -9,6 +9,8 @@ pygame.display.set_caption('Bekker Bros')
 clock = pygame.time.Clock()
 test_font = pygame.font.Font('src/font/pixeltype.ttf', 50)
 
+game_active = True
+
 sky_surface = pygame.image.load('src/graphics/sky.png').convert()
 ground_surface = pygame.image.load('src/graphics/ground.png').convert()
 text_surface = test_font.render('Welcome to BekkerBros', False, (64,64,64))
@@ -30,27 +32,36 @@ while True:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if player_rectangle.collidepoint(event.pos) and player_rectangle.bottom >= 300:
-                player_gravty = -20
+                player_gravty = -25
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and player_rectangle.bottom >= 300:
-                player_gravty = -20
+                player_gravty = -25
 
-    screen.blit(sky_surface,(0,0))
-    screen.blit(ground_surface,(0,300))
-    pygame.draw.rect(screen,'#c0e8ec',score_rectangle)
-    pygame.draw.rect(screen,'#c0e8ec',score_rectangle,10)
-    screen.blit(text_surface,score_rectangle)
+    if game_active:
+        screen.blit(sky_surface,(0,0))
+        screen.blit(ground_surface,(0,300))
+        pygame.draw.rect(screen,'#c0e8ec',score_rectangle)
+        pygame.draw.rect(screen,'#c0e8ec',score_rectangle,10)
+        screen.blit(text_surface,score_rectangle)
 
-    bro_rectangle.x -= 4
-    if bro_rectangle.right < 0: bro_rectangle.left = 800
-    screen.blit(bro_surface,bro_rectangle)
+        bro_rectangle.x -= 4
+        if bro_rectangle.right < 0: bro_rectangle.left = 800
+        screen.blit(bro_surface,bro_rectangle)
 
-    # Player
-    player_gravty += 1
-    player_rectangle.y += player_gravty
-    if player_rectangle.bottom >= 300: player_rectangle.bottom = 300
-    screen.blit(player_surface,player_rectangle)
+        # Player
+        player_gravty += 1
+        player_rectangle.y += player_gravty
+        if player_rectangle.bottom >= 300: player_rectangle.bottom = 300
+        screen.blit(player_surface,player_rectangle)
+
+        # Collisions
+        if bro_rectangle.colliderect(player_rectangle):
+            print('collision detected, game over')
+            game_active = False
+    
+    else:
+        screen.fill('Black')
 
     pygame.display.update()
     clock.tick(60)
