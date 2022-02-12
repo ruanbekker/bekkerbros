@@ -30,13 +30,18 @@ while True:
             pygame.quit()
             exit()
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if player_rectangle.collidepoint(event.pos) and player_rectangle.bottom >= 300:
-                player_gravty = -25
+        if game_active:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if player_rectangle.collidepoint(event.pos) and player_rectangle.bottom >= 300:
+                    player_gravty = -25
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and player_rectangle.bottom >= 300:
-                player_gravty = -25
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and player_rectangle.bottom >= 300:
+                    player_gravty = -25
+        else:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                game_active = True
+                bro_rectangle.left = 800
 
     if game_active:
         screen.blit(sky_surface,(0,0))
