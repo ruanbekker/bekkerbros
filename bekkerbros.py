@@ -3,6 +3,13 @@
 import pygame
 from sys import exit
 
+def display_score():
+    current_time = int(pygame.time.get_ticks() / 1000) - start_time
+    score_surface = test_font.render(f'Score: {current_time}', False, (64, 64, 64))
+    score_rectangle = score_surface.get_rect(center = (400, 50))
+    screen.blit(score_surface, score_rectangle)
+    #print(current_time)
+
 pygame.init()
 screen = pygame.display.set_mode((800,400))
 pygame.display.set_caption('Bekker Bros')
@@ -10,11 +17,15 @@ clock = pygame.time.Clock()
 test_font = pygame.font.Font('src/font/pixeltype.ttf', 50)
 
 game_active = True
+start_time = 0
 
+# Background surfaces
 sky_surface = pygame.image.load('src/graphics/sky.png').convert()
 ground_surface = pygame.image.load('src/graphics/ground.png').convert()
-text_surface = test_font.render('Welcome to BekkerBros', False, (64,64,64))
-score_rectangle = text_surface.get_rect(center = (400, 50))
+
+# Text
+# text_surface = test_font.render('Welcome to BekkerBros', False, (64,64,64))
+# score_rectangle = text_surface.get_rect(center = (400, 50))
 
 bro_surface = pygame.image.load('src/graphics/character_pixelated.png').convert_alpha()
 bro_rectangle = bro_surface.get_rect(bottomright=(600,300)) # where do we place the rectangle
@@ -42,13 +53,15 @@ while True:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
                 bro_rectangle.left = 800
+                start_time = int(pygame.time.get_ticks() / 1000)
 
     if game_active:
         screen.blit(sky_surface,(0,0))
         screen.blit(ground_surface,(0,300))
-        pygame.draw.rect(screen,'#c0e8ec',score_rectangle)
-        pygame.draw.rect(screen,'#c0e8ec',score_rectangle,10)
-        screen.blit(text_surface,score_rectangle)
+        # pygame.draw.rect(screen,'#c0e8ec',score_rectangle)
+        # pygame.draw.rect(screen,'#c0e8ec',score_rectangle,10)
+        # screen.blit(text_surface,score_rectangle)
+        display_score()
 
         bro_rectangle.x -= 4
         if bro_rectangle.right < 0: bro_rectangle.left = 800
