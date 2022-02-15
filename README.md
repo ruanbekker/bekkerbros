@@ -18,7 +18,7 @@ Images:
 
 Tutorial:
 
-- https://youtu.be/AY9MnQ4x3zk?t=8619
+- https://youtu.be/AY9MnQ4x3zk?t=10177
 
 Courses:
 
