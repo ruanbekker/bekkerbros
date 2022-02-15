@@ -29,15 +29,15 @@ ground_surface = pygame.image.load('src/graphics/ground.png').convert()
 # text_surface = test_font.render('Welcome to BekkerBros', False, (64,64,64))
 # score_rectangle = text_surface.get_rect(center = (400, 50))
 
-enemy_surface = pygame.image.load('src/graphics/character_pixelated.png').convert_alpha()
+enemy_surface = pygame.image.load('src/graphics/enemies/monster.png').convert_alpha()
 enemy_rectangle = enemy_surface.get_rect(bottomright=(600,300)) # where do we place the rectangle
 
-player_surface = pygame.image.load('src/graphics/player/player_walk_1.png').convert_alpha()
+player_surface = pygame.image.load('src/graphics/player/bekkerbro.png').convert_alpha()
 player_rectangle = player_surface.get_rect(midbottom=(80,300))
 player_gravty = 0
 
 # Intro screen
-player_stand = pygame.image.load('src/graphics/player/player_stand.png').convert_alpha()
+player_stand = pygame.image.load('src/graphics/player/bekkerbro.png').convert_alpha()
 player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
 player_stand_rectangle = player_stand.get_rect(center = (400, 200))
 
