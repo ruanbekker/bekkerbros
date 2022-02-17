@@ -32,6 +32,19 @@ def collisions(player, obstacles):
                 return False 
     return True
 
+def player_animation():
+    global player_surface, player_index
+    if player_rectangle.bottom < 300:
+        # jump
+        player_surface = player_jump
+    else:
+        # walk
+        player_index += 0.1
+        if player_index >= len(player_walk): player_index = 0
+        player_surface = player_walk[int(player_index)]
+    # play walking animation if player is on the floor
+    # display the jump surface when player is not on the floor
+
 pygame.init()
 screen = pygame.display.set_mode((800,400))
 pygame.display.set_caption('Bekker Bros')
@@ -57,7 +70,14 @@ enemy2_surface = pygame.image.load('src/graphics/enemies/monster2.png').convert_
 
 obstacle_rectangle_list = []
 
-player_surface = pygame.image.load('src/graphics/player/bekkerbro.png').convert_alpha()
+#player_surface = pygame.image.load('src/graphics/player/bekkerbro.png').convert_alpha()
+player_walk_1 = pygame.image.load('src/graphics/player/bekkerbro.png').convert_alpha()
+player_walk_2 = pygame.image.load('src/graphics/player/bekkerbro2.png').convert_alpha()
+player_walk = [player_walk_1, player_walk_2]
+player_index = 0
+player_jump = pygame.image.load('src/graphics/player/bekkerbro_jump.png').convert_alpha()
+
+player_surface = player_walk[player_index]
 player_rectangle = player_surface.get_rect(midbottom=(80,300))
 player_gravty = 0
 
@@ -89,7 +109,7 @@ while True:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player_rectangle.bottom >= 300:
-                    player_gravty = -25
+                    player_gravty = -21
         else:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
@@ -118,6 +138,7 @@ while True:
         player_gravty += 1
         player_rectangle.y += player_gravty
         if player_rectangle.bottom >= 300: player_rectangle.bottom = 300
+        player_animation()
         screen.blit(player_surface, player_rectangle)
 
         # Obstacle movement
